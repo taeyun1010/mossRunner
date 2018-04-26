@@ -18,8 +18,10 @@ extension = ".cpp"
 # also change this to desired extension
 extensionCmd = "cc"
 
-coin1path = "C:\Users\User\Desktop\moss\coins/bitcoin/"
-coin2path = "C:\Users\User\Desktop\moss\coins/BTCGPU/"
+coins = ["bitcoin", "BTCGPU"]
+
+coin1path = "C:\Users\User\Desktop\moss\coins/" + coins[0] + "/"
+coin2path = "C:\Users\User\Desktop\moss\coins/" + coins[1] + "/" 
 
 # get max percentage of the file happening in this page
 def getPercentage(page, coinpath):
@@ -108,12 +110,21 @@ if __name__ == '__main__':
 #             print(os.path.join(root, name))
 #             
 #             
+
+    totalsum = 0
+    count = 0
+
     # consider every file with the given extension in coin1 directory
     for dirpath, dirnames, filenames in os.walk(coin1path):
         for filename in [f for f in filenames if f.endswith(extension)]:
             thisfile = os.path.join(dirpath, filename)
             percentage1 = queryServer(thisfile, "C:\Users\User\Desktop\moss\coins\BTCGPU\src/*.cpp")
+            totalsum = totalsum + int(percentage1)
+            count = count + 1
             print(str(percentage1) + "\n")
+    
+    print("Simliarity percetange between " + coins[0] + " " + coins[1] + " using moss is " + (totalsum/count) + "\n")
+    
 #     temp = os.walk("C:\Users\User\Desktop\moss\coins/bitcoin/")
 #     print(x[0] for x in temp)
 #     
